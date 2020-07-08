@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MyMovies. MVVM Retrofit</string>
+    <string name="api_key">b2a215223af1910c714de6565b9dd06e</string>
+</resources>
