@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.paging.PagedList;
+import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -22,7 +24,7 @@ import com.nikorych.mymoviesmvvmretrofit.view.MovieDetailsActivity;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ResultViewHolder> {
+public class ResultAdapter extends PagedListAdapter<Result, ResultAdapter.ResultViewHolder> {
 
     @NonNull
     @Override
@@ -32,23 +34,25 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ResultView
         return new ResultViewHolder(resultListItemBinding);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ResultViewHolder holder, int position) {
-        Result result = results.get(position);
-        holder.resultListItemBinding.setResult(result);
+    public ResultAdapter(Context context) {
+        super(Result.CALLBACK);
+        this.context = context;
+//        this.results = results;
     }
 
-    @Override
-    public int getItemCount() {
-        return results.size();
-    }
+//    @Override
+//    public int getItemCount() {
+//        return results.size();
+//    }
 
     private Context context;
-    private ArrayList<Result> results;
+//    private ArrayList<Result> results;
 
-    public ResultAdapter(Context context, ArrayList<Result> results) {
-        this.context = context;
-        this.results = results;
+    @Override
+    public void onBindViewHolder(@NonNull ResultViewHolder holder, int position) {
+//        Result result = results.get(position);
+        Result result = getItem(position);
+        holder.resultListItemBinding.setResult(result);
     }
 
     public class ResultViewHolder extends RecyclerView.ViewHolder{
@@ -63,7 +67,8 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ResultView
 
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION){
-                        Result result = results.get(position);
+//                        Result result = results.get(position);
+                        Result result = getItem(position);
                         Intent intent = new Intent(context, MovieDetailsActivity.class);
                         intent.putExtra("movieData", result);
                         context.startActivity(intent);
